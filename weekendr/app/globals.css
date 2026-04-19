@@ -1,0 +1,123 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── Google Fonts ────────────────────────────────────────────────── */
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300;1,9..144,400&family=DM+Sans:wght@400;500;600&display=swap');
+
+/* ── Design tokens ───────────────────────────────────────────────── */
+:root {
+  --ink:    #1C1814;
+  --paper:  #F7F4EE;
+  --smoke:  #EDEBE4;
+  --stone:  #9A9288;
+  --yellow: #FFE141;
+  --terra:  #A85C38;
+  --sage:   #4A6955;
+  --amber:  #9B7A3A;
+}
+
+/* ── Base ────────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; }
+
+html { -webkit-tap-highlight-color: transparent; }
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: 'DM Sans', system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── Typography utilities ────────────────────────────────────────── */
+.font-display { font-family: 'Bebas Neue', sans-serif; }
+.font-body    { font-family: 'Fraunces', Georgia, serif; }
+
+/* ── Weekendr logo SVG helper ────────────────────────────────────── */
+.logo-week { fill: var(--yellow); }
+.logo-endr { fill: var(--paper); }
+.logo-week-dark { fill: var(--ink); }
+.logo-endr-dark { fill: var(--ink); }
+
+/* ── Interest / vibe chip toggles ────────────────────────────────── */
+.chip {
+  @apply inline-flex items-center gap-1.5 px-3 py-2 rounded-full border text-sm cursor-pointer select-none transition-all duration-150;
+  font-family: 'DM Sans', system-ui, sans-serif;
+}
+.chip-off {
+  @apply border-stone-200 bg-white text-stone-500 hover:border-stone-300;
+}
+.chip-on {
+  border-color: var(--terra);
+  background: rgba(168, 92, 56, 0.08);
+  color: var(--terra);
+}
+
+/* ── Primary button ──────────────────────────────────────────────── */
+.btn-primary {
+  @apply w-full flex items-center justify-center font-semibold rounded-2xl transition-all duration-150 active:scale-[0.98];
+  background: var(--yellow);
+  color: var(--ink);
+  font-family: 'Bebas Neue', sans-serif;
+  letter-spacing: 1.5px;
+  font-size: 20px;
+  padding: 18px 24px;
+}
+.btn-primary:hover { filter: brightness(0.97); }
+
+/* ── Secondary button ────────────────────────────────────────────── */
+.btn-secondary {
+  @apply w-full flex items-center justify-center gap-2 font-semibold rounded-2xl transition-all duration-150 active:scale-[0.98];
+  border: 1.5px solid rgba(247, 244, 238, 0.18);
+  color: rgba(247, 244, 238, 0.6);
+  font-family: 'DM Sans', system-ui, sans-serif;
+  font-size: 14px;
+  padding: 14px 24px;
+}
+.btn-secondary:hover {
+  border-color: rgba(247, 244, 238, 0.35);
+  color: rgba(247, 244, 238, 0.85);
+}
+
+/* ── Ghost button (light bg) ─────────────────────────────────────── */
+.btn-ghost {
+  @apply w-full flex items-center justify-center gap-2 rounded-2xl transition-all duration-150 active:scale-[0.98];
+  border: 1.5px solid #E0DDD5;
+  color: var(--stone);
+  font-family: 'DM Sans', system-ui, sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  padding: 14px 24px;
+  background: white;
+}
+
+/* ── Input field ─────────────────────────────────────────────────── */
+.input-field {
+  @apply w-full rounded-xl px-4 py-3 outline-none transition-all text-sm;
+  background: white;
+  border: 1.5px solid #E0DDD5;
+  color: var(--ink);
+  font-family: 'DM Sans', system-ui, sans-serif;
+}
+.input-field::placeholder { color: var(--stone); }
+.input-field:focus {
+  border-color: var(--terra);
+  box-shadow: 0 0 0 3px rgba(168, 92, 56, 0.1);
+}
+
+/* ── Card surface ────────────────────────────────────────────────── */
+.card-surface {
+  @apply rounded-2xl overflow-hidden;
+  background: white;
+  box-shadow: 0 2px 12px rgba(28, 24, 20, 0.08);
+}
+
+/* ── Section label (tiny uppercase) ─────────────────────────────── */
+.section-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--stone);
+  font-family: 'DM Sans', system-ui, sans-serif;
+}
