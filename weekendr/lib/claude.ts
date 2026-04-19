@@ -44,107 +44,23 @@ export async function generatePlans(
     ? (profile as QuickProfile).avoid_notes || "none"
     : [(profile as Preferences).dietary_notes, (profile as Preferences).mobility_notes, (profile as Preferences).other_notes].filter(Boolean).join(". ") || "none";
 
-  const prompt = `You are a brilliant Melbourne weekend concierge — opinionated, specific, and deeply local. You know every laneway café, hidden gallery, trail, and neighbourhood bar in the city.
+  const prompt = `You are a Melbourne weekend concierge. Generate 3 itinerary options for ${partySize === 1 ? "a solo person" : partySize === 2 ? "a couple" : `a group of ${partySize}`} based in ${suburb}.
 
-Generate 3 complete weekend itinerary options for ${partySize === 1 ? "a solo person" : partySize === 2 ? "a couple" : `a group of ${partySize}`} based in ${suburb}.
+Profile: ${interestLine}. Budget: ${budget}. Avoid: ${avoidLine}.
+Weekend: ${dateLabel} (${season}). Weather: ${weatherSummary(weather)}.
 
-PROFILE
-- ${interestLine}
-- Budget: ${budget}
-- Things to avoid / notes: ${avoidLine}
+Return ONLY valid JSON, no markdown. Use this exact structure:
 
-CONTEXT
-- Weekend: ${dateLabel} (${season} in Melbourne)
-- Weather: ${weatherSummary(weather)}
+{"plans":[{"id":1,"emoji":"🌿","vibe":"Outdoors & Active","name":"The Green Escape","tagline":"Fresh air, tired legs, big smiles.","perfect_for":"when you need to reset","estimated_cost":"$30–50pp","moods":["explore","recharge"],"saturday":{"theme":"Morning trails","slots":[{"main":{"time":"9am","name":"Breakfast at Lune","venue":"Lune Croissanterie, Rose St Fitzroy","tip":"Order the ham & cheese. Queue moves fast.","emoji":"☕","dot_color":"terra"},"alts":[{"time":"9am","name":"Market Lane Coffee","venue":"Market Lane, Prahran Market","tip":"Single origin, beautiful setting.","emoji":"☕","dot_color":"terra"}],"chosen_index":0}]},"sunday":{"theme":"Slow Sunday","slots":[{"main":{"time":"10am","name":"Example","venue":"Venue, Suburb","tip":"Insider tip here.","emoji":"🌿","dot_color":"sage"},"alts":[{"time":"10am","name":"Alt Example","venue":"Alt Venue, Suburb","tip":"Alt tip.","emoji":"🌿","dot_color":"sage"}],"chosen_index":0}]}}]}
 
-REQUIREMENTS
-Create exactly 3 plans with these distinct personalities:
-  Plan 1 emoji 🌿 — Outdoors & active (walks, trails, parks, physical)
-  Plan 2 emoji 🎨 — Cultural & neighbourhoods (galleries, wandering, cafes, local discovery)
-  Plan 3 emoji 🍽 — Food & social (restaurants, bars, markets, eating well)
-
-For EACH plan:
-- Name it memorably (e.g. "The Green Escape", "Neighbourhood Deep Dive")
-- Write a punchy one-sentence tagline
-- Give Saturday AND Sunday, each with 2–4 activity slots
-- For EACH activity slot, provide the MAIN activity PLUS 2 ALTERNATIVES (so the user can swap if they want something different)
-- Be SPECIFIC: real venue names, real Melbourne streets and suburbs
-- Factor in weather — if rain is forecast, lean into indoor options or covered spots
-- Include at least one insider tip per activity
-- Make each of the 3 plans feel genuinely different in energy and geography
-
-RULES
-- Name real places (e.g. "Patricia Coffee Brewers, Little William St" not "a local café")
-- Don't suggest things that require advance planning the user hasn't done unless you flag it
-- Honour dietary/mobility notes throughout
-- No tourist clichés as primary activities
-
-RESPONSE FORMAT
-Return ONLY valid JSON — no markdown, no explanation, just the object.
-
-{
-  "plans": [
-    {
-      "id": 1,
-      "emoji": "🌿",
-      "vibe": "Outdoors & Active",
-      "name": "The Green Escape",
-      "tagline": "Fresh air, tired legs, big smiles.",
-      "perfect_for": "when you need to get out of your heads",
-      "estimated_cost": "$30–50 per person",
-      "moods": ["explore", "recharge"],
-      "saturday": {
-        "theme": "Morning trails and slow lunch",
-        "slots": [
-          {
-            "main": {
-              "time": "8:30am",
-              "name": "Breakfast Before the Crowds",
-              "venue": "Lune Croissanterie, Rose St Fitzroy",
-              "description": "The best croissants in the southern hemisphere. Get there at opening — queue moves fast.",
-              "tip": "Order the ham & cheese. Non-negotiable.",
-              "emoji": "☕",
-              "dot_color": "terra",
-              "bg_gradient": "linear-gradient(135deg, #2C1810 0%, #6B3A2A 100%)",
-              "type": "Coffee"
-            },
-            "alts": [
-              {
-                "time": "8:30am",
-                "name": "Market Lane Morning",
-                "venue": "Market Lane Coffee, Prahran Market",
-                "description": "Exceptional single origin in a beautiful market setting. Grab a pastry from the market stalls while you're there.",
-                "tip": "The market itself is worth a slow wander after coffee.",
-                "emoji": "☕",
-                "dot_color": "terra",
-                "bg_gradient": "linear-gradient(135deg, #2A1810 0%, #5A3020 100%)",
-                "type": "Coffee"
-              },
-              {
-                "time": "8:30am",
-                "name": "Wide Open Road",
-                "venue": "Wide Open Road, Brunswick",
-                "description": "A Brunswick institution. Incredible natural light, great eggs, one of Melbourne's best flat whites.",
-                "tip": "Arrive before 9am on weekends — it fills up fast.",
-                "emoji": "☕",
-                "dot_color": "terra",
-                "bg_gradient": "linear-gradient(135deg, #1A1208 0%, #4A3018 100%)",
-                "type": "Coffee"
-              }
-            ],
-            "chosen_index": 0
-          }
-        ]
-      },
-      "sunday": {
-        "theme": "Slow morning, long lunch",
-        "slots": []
-      }
-    }
-  ]
-}
-
-Fill all 3 plans fully with real, specific Melbourne content. Each plan needs a complete Saturday and Sunday with 2–4 slots each, all with 2 real alternatives.`;
+Rules:
+- 3 plans: 🌿 Outdoors, 🎨 Cultural, 🍽 Food & social
+- Each plan: Saturday + Sunday, 2–3 slots each, 1 alt per slot
+- Real Melbourne venues, specific addresses
+- Factor in weather (rain = indoor/covered options)
+- dot_color must be "terra", "sage", or "amber"
+- chosen_index always 0
+- No extra fields beyond the example structure`;
 
   const msg = await client.messages.create({
     model: "claude-haiku-4-5-20251001",
