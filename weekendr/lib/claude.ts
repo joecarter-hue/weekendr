@@ -189,7 +189,7 @@ DO NOT use asterisks or stage directions. Just the words Micky would say.
 Return ONLY the message text, nothing else.`;
 
   const msg = await client.messages.create({
-    model: "claude-sonnet-4-6",,
+    model: "claude-sonnet-4-6",
     max_tokens: 300,
     messages: [{ role: "user", content: prompt }],
   });
