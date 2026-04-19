@@ -3,7 +3,7 @@ import { generatePlans } from "@/lib/claude";
 import { getMelbourneWeekend } from "@/lib/weather";
 import { savePlans, nextSaturday, upsertUser, upsertPreferences } from "@/lib/supabase";
 import type { QuickProfile } from "@/types";
-
+export const maxDuration = 60;
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
