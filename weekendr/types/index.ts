@@ -40,12 +40,12 @@ export interface Activity {
   time: string;
   name: string;
   venue: string;
-  description: string;
+  description?: string;
   tip?: string;
   emoji: string;
   dot_color: "terra" | "sage" | "amber";
-  bg_gradient: string;    // CSS gradient for card image area
-  type: string;           // e.g. "Coffee", "Outdoors", "Food"
+  bg_gradient?: string;   // PRO: per-activity gradient
+  type?: string;          // PRO: activity type badge
 }
 
 // Each activity slot has a main pick + pre-generated alternatives for swapping
