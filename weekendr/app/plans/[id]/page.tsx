@@ -282,7 +282,7 @@ function SwipeBuilderContent() {
   );
 }
 
-// ── Fallback gradients derived from dot colour (used when bg_gradient absent) ──
+// ── Fallback gradients derived from dot colour ─────────────────────────────────
 const FALLBACK_BG: Record<string, string> = {
   terra: "linear-gradient(135deg, #2C1810 0%, #6B3A2A 100%)",
   sage:  "linear-gradient(135deg, #1A2820 0%, #2A4A38 100%)",
@@ -306,6 +306,32 @@ function ActivityCardInner({ activity }: { activity: Activity }) {
         </div>
         {activity.type && (
           <div
+            className="absolute top-3.5 right-3.5 text-paper/80 text-xs font-semibold px-2.5 py-1 rounded-full"
+            style={{ background: "rgba(28,24,20,0.5)", backdropFilter: "blur(6px)", letterSpacing: "1.5px", textTransform: "uppercase" }}
+          >
+            {activity.type}
+          </div>
+        )}
+      </div>
+      {/* Body */}
+      <div className="p-4">
+        <div className="section-label mb-1" style={{ color: "var(--terra)" }}>{activity.venue}</div>
+        <div className="font-display text-ink text-2xl leading-none mb-2">{activity.name}</div>
+        {activity.description && (
+          <p className="font-body text-stone text-sm italic leading-relaxed">{activity.description}</p>
+        )}
+        {activity.tip && (
+          <div
+            className="mt-3 px-3 py-2 rounded-r-lg font-body text-xs italic leading-snug"
+            style={{ background: "#FBF7E8", borderLeft: "3px solid var(--yellow)", color: "#6B5B00" }}
+          >
+            💡 {activity.tip}
+          </div>
+        )}
+      </div>
+    </>
+  );
+}
 
 function SwipeLoadingShell() {
   return (
