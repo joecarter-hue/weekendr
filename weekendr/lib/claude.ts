@@ -64,7 +64,7 @@ Rules:
 
   const msg = await client.messages.create({
     model: "claude-haiku-4-5-20251001",
-    max_tokens: 2500,
+    max_tokens: 3500,
     messages: [{ role: "user", content: prompt }],
   });
 
