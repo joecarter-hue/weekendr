@@ -147,8 +147,8 @@ Return ONLY valid JSON — no markdown, no explanation, just the object.
 Fill all 3 plans fully with real, specific Melbourne content. Each plan needs a complete Saturday and Sunday with 2–4 slots each, all with 2 real alternatives.`;
 
   const msg = await client.messages.create({
-    model: "claude-sonnet-4-6",
-    max_tokens: 8000,
+    model: "claude-haiku-4-5-20251001",
+    max_tokens: 3000,
     messages: [{ role: "user", content: prompt }],
   });
 
@@ -189,7 +189,7 @@ DO NOT use asterisks or stage directions. Just the words Micky would say.
 Return ONLY the message text, nothing else.`;
 
   const msg = await client.messages.create({
-    model: "claude-sonnet-4-6",
+    model: "claude-haiku-4-5-20251001",
     max_tokens: 300,
     messages: [{ role: "user", content: prompt }],
   });
