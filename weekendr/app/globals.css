@@ -52,7 +52,6 @@ body {
    .chip-off:hover {
      border-color: #C8C4BB;
    }
-}
 .chip-on {
   border-color: var(--terra);
   background: rgba(168, 92, 56, 0.08);
