@@ -282,13 +282,21 @@ function SwipeBuilderContent() {
   );
 }
 
+// ── Fallback gradients derived from dot colour (used when bg_gradient absent) ──
+const FALLBACK_BG: Record<string, string> = {
+  terra: "linear-gradient(135deg, #2C1810 0%, #6B3A2A 100%)",
+  sage:  "linear-gradient(135deg, #1A2820 0%, #2A4A38 100%)",
+  amber: "linear-gradient(135deg, #2A2010 0%, #5A4020 100%)",
+};
+
 // ── Activity card inner content ────────────────────────────────────────────────
 
 function ActivityCardInner({ activity }: { activity: Activity }) {
+  const bg = activity.bg_gradient || FALLBACK_BG[activity.dot_color] || FALLBACK_BG.terra;
   return (
     <>
       {/* Image area */}
-      <div className="relative h-52 overflow-hidden" style={{ background: activity.bg_gradient }}>
+      <div className="relative h-52 overflow-hidden" style={{ background: bg }}>
         <div className="absolute inset-0" style={{ background: "linear-gradient(to bottom, transparent 40%, rgba(28,24,20,0.65) 100%)" }} />
         <div
           className="absolute top-3.5 left-3.5 font-display text-ink text-lg px-2.5 py-0.5 rounded"
@@ -296,30 +304,8 @@ function ActivityCardInner({ activity }: { activity: Activity }) {
         >
           {activity.time}
         </div>
-        <div
-          className="absolute top-3.5 right-3.5 text-paper/80 text-xs font-semibold px-2.5 py-1 rounded-full"
-          style={{ background: "rgba(28,24,20,0.5)", backdropFilter: "blur(6px)", letterSpacing: "1.5px", textTransform: "uppercase" }}
-        >
-          {activity.type}
-        </div>
-      </div>
-      {/* Body */}
-      <div className="p-4">
-        <div className="section-label mb-1" style={{ color: "var(--terra)" }}>{activity.venue}</div>
-        <div className="font-display text-ink text-2xl leading-none mb-2">{activity.name}</div>
-        <p className="font-body text-stone text-sm italic leading-relaxed">{activity.description}</p>
-        {activity.tip && (
+        {activity.type && (
           <div
-            className="mt-3 px-3 py-2 rounded-r-lg font-body text-xs italic leading-snug"
-            style={{ background: "#FBF7E8", borderLeft: "3px solid var(--yellow)", color: "#6B5B00" }}
-          >
-            💡 {activity.tip}
-          </div>
-        )}
-      </div>
-    </>
-  );
-}
 
 function SwipeLoadingShell() {
   return (
