@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { ChevronLeft, Loader2 } from "lucide-react";
 
@@ -210,12 +210,12 @@ function GeneratingScreen() {
   ];
 
   // Cycle through steps on a timer
-  useState(() => {
+  useEffect(() => {
     const interval = setInterval(() => {
       setStepIndex(i => Math.min(i + 1, steps.length - 1));
     }, 1800);
     return () => clearInterval(interval);
-  });
+  }, []);
 
   return (
     <div className="min-h-screen bg-ink flex flex-col items-center justify-center px-8 text-center">
